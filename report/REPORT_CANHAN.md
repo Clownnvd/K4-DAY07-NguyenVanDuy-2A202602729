@@ -1,128 +1,137 @@
-# Báo Cáo Cá Nhân — Lab 7: Embedding & Vector Store
+# Báo cáo cá nhân — Lab 7: Embedding & Vector Store
 
-**Họ tên:** [Tên sinh viên]
-**Nhóm:** [Tên nhóm]
-**Ngày:** [Ngày nộp]
+**Họ tên:** Nguyễn Văn Duy  
+**MSSV:** 2A202602729  
+**Nhóm:** Nguyễn Văn Duy, Dương Thị Ngân, Lục Tiến Đạt, Nguyễn Thanh Bình  
+**Ngày:** 20/09/2026  
+**Trạng thái:** Hoàn thành nội dung cá nhân đến CP4; phần benchmark CP5 đang chờ bộ 5 câu hỏi chung.
 
-> **Nộp 1 bản / sinh viên.** Phần nhóm (lựa chọn tài liệu, thiết kế chiến lược, bộ câu hỏi đánh giá, demo) nộp chung 1 bản trong `REPORT_NHOM.md`. Chi tiết thang điểm: `docs/SCORING.md`.
+## 1. Khởi động — 5 điểm
 
-**Tổng điểm phần cá nhân: 60** = Khởi động (5) + Hướng tiếp cận (10) + Hoàn thiện code (30) + Dự đoán độ tương tự (5) + Kết quả truy xuất của tôi (10).
+### Cosine similarity
 
----
+Cosine similarity cao nghĩa là hai vector chỉ gần cùng hướng, nên hai đoạn văn có nội dung hoặc ý nghĩa gần nhau. Giá trị gần 1 thể hiện mức tương đồng cao; gần 0 thể hiện ít liên quan.
 
-## 1. Khởi động (Warm-up) — Cá nhân (5 điểm)
+**Ví dụ tương đồng cao:**
 
-### Độ tương tự Cosine (Cosine Similarity) (Bài tập 1.1)
+- Câu A: “Người mua nhận tiền hoàn trong bao lâu?”
+- Câu B: “Thời gian Shopee hoàn lại tiền cho khách hàng là bao nhiêu ngày?”
+- Hai câu khác từ nhưng cùng hỏi thời hạn hoàn tiền.
 
-**Độ tương tự cosine cao (High cosine similarity) nghĩa là gì?**
-> *Viết 1-2 câu:*
+**Ví dụ tương đồng thấp:**
 
-**Ví dụ có độ tương tự CAO:**
-- Câu A:
-- Câu B:
-- Tại sao tương đồng:
+- Câu A: “Người bán cần cung cấp bằng chứng khiếu nại nào?”
+- Câu B: “Cách tạo môi trường ảo Python trên Windows?”
+- Hai câu thuộc hai miền và mục đích khác nhau.
 
-**Ví dụ có độ tương tự THẤP:**
-- Câu A:
-- Câu B:
-- Tại sao khác:
+Cosine phù hợp với text embedding vì nó so sánh hướng biểu diễn ngữ nghĩa và ít bị ảnh hưởng bởi độ lớn vector. Khoảng cách Euclid còn phụ thuộc độ lớn nên hai vector cùng hướng vẫn có thể bị coi là xa.
 
-**Tại sao độ tương tự cosine (cosine similarity) được ưu tiên hơn khoảng cách Euclid (Euclidean distance) cho text embeddings?**
-> *Viết 1-2 câu:*
+### Tính số chunk
 
-### Bài toán tính toán Chunking (Bài tập 1.2)
+Với `L=10.000`, `chunk_size=500`, `overlap=50`:
 
-**Tài liệu 10,000 ký tự, chunk_size=500, overlap=50. Bao nhiêu chunks?**
-> *Trình bày phép tính:*
-> *Đáp án:*
-
-**Nếu độ chồng chéo (overlap) tăng lên 100, số lượng chunk thay đổi thế nào? Tại sao muốn độ chồng chéo nhiều hơn?**
-> *Viết 1-2 câu:*
-
----
-
-## 2. Hướng tiếp cận của tôi (My Approach) — Cá nhân (10 điểm)
-
-Giải thích cách tiếp cận của bạn khi lập trình (implement) các phần chính trong gói `src`.
-
-### Các hàm chia nhỏ (Chunking Functions)
-
-**`SentenceChunker.chunk`** — hướng tiếp cận:
-> *Viết 2-3 câu: dùng biểu thức chính quy (regex) gì để phát hiện câu? Xử lý trường hợp ngoại lệ (edge case) nào?*
-
-**`RecursiveChunker.chunk` / `_split`** — hướng tiếp cận:
-> *Viết 2-3 câu: thuật toán hoạt động thế nào? Base case (trường hợp cơ sở) là gì?*
-
-### Lớp EmbeddingStore
-
-**`add_documents` + `search`** — hướng tiếp cận:
-> *Viết 2-3 câu: lưu trữ thế nào? Tính độ tương tự ra sao?*
-
-**`search_with_filter` + `delete_document`** — hướng tiếp cận:
-> *Viết 2-3 câu: lọc (filter) trước hay sau? Xóa bằng cách nào?*
-
-### Tác tử KnowledgeBaseAgent
-
-**`answer`** — hướng tiếp cận:
-> *Viết 2-3 câu: cấu trúc prompt? Cách đưa ngữ cảnh (inject context) vào thế nào?*
-
----
-
-## 3. Hoàn thiện code (Core Implementation) — Cá nhân (30 điểm)
-
-Vượt qua bộ kiểm thử là điều kiện tính điểm phần này.
-
-### Kết Quả Kiểm Thử (Test Results)
-
-```
-# Dán kết quả (output) của: pytest tests/ -v
+```text
+step = 500 - 50 = 450
+count = ceil((10.000 - 50) / 450)
+      = ceil(22,111...)
+      = 23 chunk
 ```
 
-**Số lượng bài test vượt qua (pass):** __ / 42
+Khi tăng overlap lên 100:
 
----
+```text
+step = 500 - 100 = 400
+count = ceil((10.000 - 100) / 400)
+      = ceil(24,75)
+      = 25 chunk
+```
 
-## 4. Dự đoán độ tương tự (Similarity Predictions) — Cá nhân (5 điểm)
+Overlap lớn hơn tạo thêm hai chunk và tốn lưu trữ/tính toán hơn, nhưng giảm nguy cơ mất thông tin nằm đúng ở ranh giới hai chunk.
 
-| Cặp | Câu A | Câu B | Dự đoán | Điểm thực tế | Đúng? |
-|------|-----------|-----------|---------|--------------|-------|
-| 1 | | | cao / thấp | | |
-| 2 | | | cao / thấp | | |
-| 3 | | | cao / thấp | | |
-| 4 | | | cao / thấp | | |
-| 5 | | | cao / thấp | | |
+## 2. Hướng tiếp cận của tôi — 10 điểm
 
-**Kết quả nào bất ngờ nhất? Điều này nói gì về cách embeddings biểu diễn ý nghĩa?**
-> *Viết 2-3 câu:*
+### `SentenceChunker.chunk`
 
----
+Dùng regex `(?<=[.!?])(?:\s+|\n+)` để tách sau dấu kết thúc câu nhưng giữ lại dấu câu. Các câu được `strip`, bỏ phần rỗng rồi gom tối đa `max_sentences_per_chunk`; text rỗng trả `[]`. Hạn chế còn lại là chữ viết tắt như `TS.` hoặc `v.v.` có thể bị nhận nhầm là hết câu.
 
-## 5. Kết quả truy xuất của tôi (Competition Results) — Cá nhân (10 điểm)
+### `RecursiveChunker.chunk` và `_split`
 
-Chạy **5 câu hỏi đánh giá của nhóm** trên mã nguồn cá nhân của bạn trong gói `src`. **5 câu hỏi này phải trùng với các thành viên cùng nhóm** (xem `REPORT_NHOM.md`).
+Thuật toán thử separator từ lớn đến nhỏ: đoạn trống, xuống dòng, dấu chấm, khoảng trắng rồi chuỗi rỗng. Mảnh vượt `chunk_size` được đệ quy với separator tiếp theo; các mảnh nhỏ liền nhau được gom đến sát giới hạn. Base case gồm text rỗng, text đã đủ ngắn, và hết separator thì chuyển sang fixed-size không overlap.
 
-| # | Câu hỏi (Query) | Top-1 Chunk truy xuất được (tóm tắt) | Điểm Score | Có liên quan không? (Relevant) | Câu trả lời của Agent (tóm tắt) |
-|---|-------|--------------------------------|-------|-----------|------------------------|
-| 1 | | | | | |
-| 2 | | | | | |
-| 3 | | | | | |
-| 4 | | | | | |
-| 5 | | | | | |
+### `compute_similarity`
 
-**Bao nhiêu câu hỏi trả về chunk có liên quan trong top-3?** __ / 5
+Tính tích vô hướng chia cho tích độ lớn hai vector. Nếu một vector có độ lớn bằng 0, hàm trả `0.0` để tránh chia cho 0.
 
-**Điều hay nhất tôi học được từ thành viên khác / nhóm khác (qua demo):**
-> *Viết 2-3 câu:*
+### `ChunkingStrategyComparator`
 
----
+Chạy `FixedSizeChunker`, `SentenceChunker` và `RecursiveChunker` trên cùng văn bản. Mỗi chiến lược trả `count`, `avg_length` và danh sách `chunks`; text rỗng không gây chia cho 0.
 
-## Tự Đánh Giá (Phần Cá Nhân)
+### `EmbeddingStore`
 
-| Tiêu chí | Điểm tự đánh giá |
-|----------|-------------------|
-| Khởi động (Warm-up) | / 5 |
-| Hướng tiếp cận của tôi (My Approach) | / 10 |
-| Hoàn thiện code (Core Implementation — tests) | / 30 |
-| Dự đoán độ tương tự (Similarity Predictions) | / 5 |
-| Kết quả truy xuất của tôi (Competition Results) | / 10 |
-| **Tổng phần cá nhân** | **/ 60** |
+`add_documents` tạo embedding một lần cho từng `Document`, copy metadata, bảo đảm có `doc_id` và lưu record trong bộ nhớ. `search` embed câu hỏi, tính dot product với toàn bộ record, sắp giảm dần và lấy top-k; embedding đã chuẩn hóa nên dot product tương đương cosine.
+
+`search_with_filter` lọc record theo metadata **trước** khi xếp hạng để các tài liệu sai đối tượng không chiếm top-k. `delete_document` loại toàn bộ chunk có cùng `metadata['doc_id']` và trả `True` khi thực sự xóa được.
+
+### `KnowledgeBaseAgent.answer`
+
+Agent truy xuất top-k, đánh số context `[1]`, `[2]`, `[3]` kèm `source_url`, rồi yêu cầu LLM chỉ trả lời dựa trên context và trích dẫn số nguồn. Nếu không có kết quả, agent trả thông báo thiếu thông tin và không gọi LLM.
+
+### Chiến lược cá nhân CP4: `MarkdownHeadingChunker`
+
+Tôi chọn chunk theo heading Markdown vì các chính sách Shopee được tổ chức theo mục. Regex nhận heading `##` hoặc `###`; section ngắn trở thành một chunk, section dài được cắt tiếp bằng `RecursiveChunker`, sau đó heading được gắn lại vào từng chunk con.
+
+Kết quả trên nội dung chính của `return-refund-policy.md`: 61 chunk, trung bình 316,1 ký tự, dài nhất 633 ký tự và 60/61 chunk giữ hoặc được gắn lại heading. Giả thuyết cần kiểm tra ở CP5 là việc giữ heading sẽ tăng evidence@3 cho câu hỏi về điều kiện/quy trình cụ thể.
+
+## 3. Hoàn thiện code — 30 điểm
+
+```text
+pytest tests/ -v
+============================= 42 passed in 0.45s =============================
+```
+
+**Số test vượt qua:** **42/42**  
+**Bằng chứng cục bộ:** `C:\Users\S88 Service\Downloads\Day07-CP3-42-Tests.txt`
+
+Các phần đã hoàn thiện:
+
+- `SentenceChunker`
+- `RecursiveChunker`
+- `compute_similarity`
+- `ChunkingStrategyComparator`
+- `EmbeddingStore`, metadata filter và delete
+- `KnowledgeBaseAgent`
+- `MarkdownHeadingChunker` cho chiến lược cá nhân
+
+## 4. Dự đoán độ tương tự — đang chuẩn bị phép đo
+
+Các dự đoán được ghi trước khi chạy embedding thật. Điểm thực tế sẽ được bổ sung ở CP5, không dùng `MockEmbedder` vì mock chỉ băm chuỗi và không biểu diễn ngữ nghĩa.
+
+| # | Câu A | Câu B | Dự đoán | Điểm thực tế |
+|---:|---|---|---|---|
+| 1 | Người mua nhận tiền hoàn trong bao lâu? | Thời gian hoàn tiền cho khách hàng là mấy ngày? | Cao nhất | Chờ CP5 |
+| 2 | Điều kiện để yêu cầu trả hàng là gì? | Trường hợp nào người mua được hoàn trả sản phẩm? | Cao | Chờ CP5 |
+| 3 | Người bán khiếu nại quyết định hoàn tiền thế nào? | Nhà bán hàng phản hồi tranh chấp bằng cách nào? | Cao | Chờ CP5 |
+| 4 | Phí gửi hàng hoàn trả do ai chịu? | Người bán cần nộp bằng chứng hình ảnh nào? | Trung bình/thấp | Chờ CP5 |
+| 5 | Chính sách hoàn tiền Shopee | Cách tạo môi trường ảo Python | Thấp nhất | Chờ CP5 |
+
+## 5. Kết quả truy xuất cá nhân — chờ CP5
+
+Tôi sẽ chạy đúng 5 query chung trên `MarkdownHeadingChunker(chunk_size=650)`, cùng embedding backend, `top_k=3` và filter như ba thành viên còn lại.
+
+| # | Query | Top-1 | Score | Relevant | Agent answer |
+|---:|---|---|---:|---|---|
+| 1 | Chờ bộ query chung | Chờ CP5 | — | — | — |
+| 2 | Chờ bộ query chung | Chờ CP5 | — | — | — |
+| 3 | Chờ bộ query chung | Chờ CP5 | — | — | — |
+| 4 | Chờ bộ query chung | Chờ CP5 | — | — | — |
+| 5 | Chờ bộ query chung | Chờ CP5 | — | — | — |
+
+## Tự đánh giá hiện tại
+
+| Tiêu chí | Trạng thái |
+|---|---|
+| Khởi động | Hoàn thành |
+| Hướng tiếp cận | Hoàn thành |
+| Core implementation | 42/42 tests |
+| Dự đoán similarity | Đã dự đoán, chờ điểm thật |
+| Competition results | Chờ CP5 |
