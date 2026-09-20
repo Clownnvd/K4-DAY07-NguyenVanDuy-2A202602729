@@ -102,29 +102,37 @@ Các phần đã hoàn thiện:
 - `KnowledgeBaseAgent`
 - `MarkdownHeadingChunker` cho chiến lược cá nhân
 
-## 4. Dự đoán độ tương tự — đang chuẩn bị phép đo
+## 4. Dự đoán độ tương tự — đã đo bằng embedding thật
 
-Các dự đoán được ghi trước khi chạy embedding thật. Điểm thực tế sẽ được bổ sung ở CP5, không dùng `MockEmbedder` vì mock chỉ băm chuỗi và không biểu diễn ngữ nghĩa.
+Các dự đoán được ghi trước khi chạy `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`. Không dùng `MockEmbedder` vì mock chỉ băm chuỗi và không biểu diễn ngữ nghĩa.
 
-| # | Câu A | Câu B | Dự đoán | Điểm thực tế |
+| # | Câu A | Câu B | Dự đoán | Cosine thực tế | Đánh giá |
 |---:|---|---|---|---|
-| 1 | Người mua nhận tiền hoàn trong bao lâu? | Thời gian hoàn tiền cho khách hàng là mấy ngày? | Cao nhất | Chờ CP5 |
-| 2 | Điều kiện để yêu cầu trả hàng là gì? | Trường hợp nào người mua được hoàn trả sản phẩm? | Cao | Chờ CP5 |
-| 3 | Người bán khiếu nại quyết định hoàn tiền thế nào? | Nhà bán hàng phản hồi tranh chấp bằng cách nào? | Cao | Chờ CP5 |
-| 4 | Phí gửi hàng hoàn trả do ai chịu? | Người bán cần nộp bằng chứng hình ảnh nào? | Trung bình/thấp | Chờ CP5 |
-| 5 | Chính sách hoàn tiền Shopee | Cách tạo môi trường ảo Python | Thấp nhất | Chờ CP5 |
+| 1 | Người mua nhận tiền hoàn trong bao lâu? | Thời gian hoàn tiền cho khách hàng là mấy ngày? | Cao nhất | 0,738255 | Cao nhưng không cao nhất |
+| 2 | Điều kiện để yêu cầu trả hàng là gì? | Trường hợp nào người mua được hoàn trả sản phẩm? | Cao | 0,461986 | Trung bình |
+| 3 | Người bán khiếu nại quyết định hoàn tiền thế nào? | Nhà bán hàng phản hồi tranh chấp bằng cách nào? | Cao | 0,795722 | Cao nhất thực tế |
+| 4 | Phí gửi hàng hoàn trả do ai chịu? | Người bán cần nộp bằng chứng hình ảnh nào? | Trung bình/thấp | 0,285926 | Thấp, đúng xu hướng |
+| 5 | Chính sách hoàn tiền Shopee | Cách tạo môi trường ảo Python | Thấp nhất | 0,023886 | Thấp nhất, đúng dự đoán |
 
-## 5. Kết quả truy xuất cá nhân — đã chốt query, chờ chạy CP5
+Kết quả bất ngờ nhất là cặp 3 cao hơn cặp 1 dù dùng từ khác nhau nhiều hơn. Điều này cho thấy embedding chú trọng quan hệ ngữ nghĩa “người bán phản hồi/khiếu nại tranh chấp” thay vì chỉ đếm từ trùng. Cặp 5 gần 0 xác nhận hai chủ đề không liên quan được tách rõ.
+
+## 5. Kết quả truy xuất cá nhân — CP5
 
 Tôi chạy 5 query chung do Lục Tiến Đạt đề xuất trên `MarkdownHeadingChunker(chunk_size=650)`, cùng embedding backend và `top_k=3` với ba thành viên còn lại.
 
-| # | Query | Filter | Top-1 | Score | Relevant | Agent answer |
+| # | Query | Filter | Top-1 (score) | Evidence chuẩn | Điểm retrieval |
 |---:|---|---|---|---:|---|---|
-| 1 | Thẻ tín dụng/ghi nợ nhận tiền hoàn trong bao lâu? | Không | Chờ chạy | — | — | — |
-| 2 | Thực phẩm tươi sống/đông lạnh được gửi yêu cầu trả hàng tối đa bao lâu? | Không | Chờ chạy | — | — | — |
-| 3 | Người bán có bao nhiêu ngày để khiếu nại quyết định Hoàn tiền ngay? | `audience=seller` | Chờ chạy | — | — | — |
-| 4 | Khiếu nại Hoàn tiền ngay cần bắt buộc loại bằng chứng nào? | `audience=seller` | Chờ chạy | — | — | — |
-| 5 | Hình thức hoàn trả nào yêu cầu người mua trả trước phí? | `audience=buyer` | Chờ chạy | — | — | — |
+| 1 | Thẻ tín dụng/ghi nợ nhận tiền hoàn trong bao lâu? | Không | `seller-return-process#2` (0,652738) | Không có marker 7–14 ngày trong top-3 | 0/2 |
+| 2 | Thực phẩm tươi sống/đông lạnh được gửi yêu cầu tối đa bao lâu? | Không | `return-refund-policy#12` (0,794739), chứa đúng đáp án | Rank 1 theo nội dung | 2/2 |
+| 3 | Người bán có bao nhiêu ngày để khiếu nại Hoàn tiền ngay? | `audience=seller` | `seller-refund-appeal#5` (0,896788) | Rank 1 | 2/2 |
+| 4 | Khiếu nại Hoàn tiền ngay bắt buộc cần bằng chứng nào? | `audience=seller` | `seller-refund-appeal#7` (0,823247) | Không có đủ marker đáp án trong top-3 | 0/2 |
+| 5 | Hình thức hoàn trả nào yêu cầu người mua trả trước phí? | `audience=buyer` | `buyer-return-process#0` (0,783714), chỉ là heading | Rank 3 — `buyer-return-shipping` | 1/2 |
+
+**Kết quả:** `evidence@3 = 3/5`; điểm retrieval theo nội dung là **5/10**. Toàn bộ top-3 nằm trong `ket_qua_benchmark.txt`. Đây là điểm retrieval; chưa khai điểm câu trả lời của LLM khi chưa chạy LLM thật.
+
+Metadata filter đưa evidence câu 5 từ ngoài top-3 lên rank 3; câu 3 giữ nguyên rank 1; câu 4 vẫn trượt. Failure case cho thấy đúng `doc_id` chưa đủ: top-3 câu 1 và 4 cùng đúng chủ đề nhưng không chứa chuỗi đáp án. Cải tiến tiếp theo là chunk từng hàng bảng và ghép heading-only chunk với nội dung kế tiếp.
+
+Điều tôi học được từ kết quả baseline của Lục Tiến Đạt là recursive split giữ cấu trúc tốt hơn fixed-size. Tuy nhiên, heading-aware chunking vẫn cần xử lý heading đứng riêng; chỉ giữ tiêu đề chưa bảo đảm chunk có đủ bằng chứng.
 
 ## Tự đánh giá hiện tại
 
@@ -133,5 +141,5 @@ Tôi chạy 5 query chung do Lục Tiến Đạt đề xuất trên `MarkdownHea
 | Khởi động | Hoàn thành |
 | Hướng tiếp cận | Hoàn thành |
 | Core implementation | 42/42 tests |
-| Dự đoán similarity | Đã dự đoán, chờ điểm thật |
-| Competition results | Chờ CP5 |
+| Dự đoán similarity | Đã đo 5 cặp bằng embedding thật |
+| Competition results | `evidence@3=3/5`, content retrieval score 5/10 |

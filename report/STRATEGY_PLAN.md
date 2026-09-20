@@ -16,9 +16,9 @@ Cả bốn thành viên dùng chung:
 | Thành viên | Vai trò điều phối | Chiến lược cá nhân | Tham số | Giả thuyết cần kiểm chứng |
 |---|---|---|---|---|
 | Nguyễn Văn Duy | Code/Integration | `MarkdownHeadingChunker` | `chunk_size=650` | Chính sách có cấu trúc mục rõ; giữ heading giúp chunk không mất ngữ cảnh điều khoản. |
-| Dương Thị Ngân | Data | `SentenceChunker` | `max_sentences_per_chunk=3` | Chunk ngắn theo câu làm các mốc thời gian và điều kiện nổi bật hơn. |
-| Lục Tiến Đạt | Strategy | `FixedSizeChunker` | `chunk_size=500`, `overlap=50` | Baseline đơn giản; overlap giúp giữ thông tin ở biên chunk. |
-| Nguyễn Thanh Bình | Benchmark | `RecursiveChunker` | `chunk_size=300` | Cắt theo đoạn/câu và kích thước nhỏ có thể tăng mật độ evidence. |
+| Dương Thị Ngân | Data | `FixedSizeChunker` | `chunk_size=500`, `overlap=50` | Baseline đơn giản; overlap giúp giữ thông tin ở biên chunk. |
+| Lục Tiến Đạt | Strategy | `RecursiveChunker` | `chunk_size=500` | Cắt theo ranh giới đoạn/câu để giữ cấu trúc chính sách. |
+| Nguyễn Thanh Bình | Benchmark | `SentenceChunker` | `max_sentences_per_chunk=3` | Chunk theo câu giúp các mốc thời gian và điều kiện nổi bật hơn. |
 
 Mỗi thành viên vẫn tự hoàn thiện TODO, chạy 42 tests, chạy benchmark chiến lược được giao và viết `REPORT_CANHAN.md`.
 

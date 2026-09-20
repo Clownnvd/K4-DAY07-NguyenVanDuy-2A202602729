@@ -5,6 +5,7 @@
     "gold_answer": "Thời gian nhận được tiền hoàn là từ 7–14 ngày làm việc, tùy theo từng ngân hàng, sau khi Shopee chấp nhận hoàn tiền; tiền sẽ hoàn về đúng tài khoản thẻ tín dụng/ghi nợ đã dùng khi thanh toán.",
     "evidence_doc_id": "buyer-refund-timeline",
     "evidence_section": "Bảng 1 và Lưu ý chung",
+    "evidence_markers": ["Thẻ tín dụng/ghi nợ", "7–14 ngày làm việc"],
     "metadata_filter": null
   },
   {
@@ -13,6 +14,7 @@
     "gold_answer": "Trong vòng 24 giờ kể từ lúc đơn hàng được cập nhật trạng thái Giao hàng thành công, trừ lý do Chưa nhận được hàng.",
     "evidence_doc_id": "buyer-return-eligibility",
     "evidence_section": "Mục 1.2",
+    "evidence_markers": ["thực phẩm tươi sống", "24 giờ"],
     "metadata_filter": null
   },
   {
@@ -21,6 +23,7 @@
     "gold_answer": "Người bán phải gửi khiếu nại trong vòng 2 ngày kể từ khi Shopee gửi thông báo Hoàn tiền ngay cho Người mua mà không yêu cầu trả hàng. Shopee xem xét trong 3–5 ngày làm việc.",
     "evidence_doc_id": "seller-refund-appeal",
     "evidence_section": "Bảng tổng quan thời hạn và Mục 1",
+    "evidence_markers": ["2 ngày", "Hoàn tiền ngay"],
     "metadata_filter": {"audience": "seller"}
   },
   {
@@ -29,6 +32,7 @@
     "gold_answer": "Người bán bắt buộc phải cung cấp bằng chứng đóng gói: video ghi lại toàn bộ quá trình đóng gói sản phẩm trước khi bàn giao cho Đơn vị vận chuyển. Không yêu cầu bằng chứng mở hàng hoàn.",
     "evidence_doc_id": "seller-return-evidence",
     "evidence_section": "Mục B và C.1",
+    "evidence_markers": ["Bằng chứng đóng gói", "Bắt buộc"],
     "metadata_filter": {"audience": "seller"}
   },
   {
@@ -37,6 +41,7 @@
     "gold_answer": "Hình thức Tự sắp xếp. Người mua cần thanh toán trước phí trả hàng tại bưu cục, sau đó Shopee hỗ trợ hoàn lại phí theo chính sách.",
     "evidence_doc_id": "buyer-return-shipping",
     "evidence_section": "Mục 1.1 và 2.2",
+    "evidence_markers": ["Tự sắp xếp", "thanh toán trước phí trả hàng"],
     "metadata_filter": {"audience": "buyer"}
   }
 ]

@@ -1,0 +1,81 @@
+DAY07 CP5 — NGUYỄN VĂN DUY
+Embedding: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+Chunker: MarkdownHeadingChunker(chunk_size=650)
+Corpus: 8 documents
+Chunks indexed: 185
+top_k: 3
+
+Q1: Người mua thanh toán đơn hàng bằng Thẻ tín dụng/ghi nợ thì nhận được tiền hoàn trong bao lâu?
+Filter: null
+Gold: Thời gian nhận được tiền hoàn là từ 7–14 ngày làm việc, tùy theo từng ngân hàng, sau khi Shopee chấp nhận hoàn tiền; tiền sẽ hoàn về đúng tài khoản thẻ tín dụng/ghi nợ đã dùng khi thanh toán.
+Expected evidence: buyer-refund-timeline — Bảng 1 và Lưu ý chung
+  Top-1: score=0.652738 doc_id=seller-return-process chunk=seller-return-process#2 | ### 1. Thời hạn Người mua yêu cầu Trả hàng/Hoàn tiền Người mua có thể gửi yêu cầu Trả hàng/Hoàn tiền trong vòng **15 ngày kể từ khi đơn hàng được giao thành công**. Trong trường hợp Người mua đã xác nhận **“Đã…
+  Top-2: score=0.616028 doc_id=buyer-refund-timeline chunk=buyer-refund-timeline#6 | ## Lưu ý chung - Đối với các đơn hàng thanh toán bằng hình thức Thanh toán khi nhận hàng hoặc Thanh toán QR/Ứng dụng ngân hàng, kênh hoàn tiền sẽ tùy theo phương thức hoàn tiền khi bạn gửi yêu cầu Trả hàng/Hoà…
+  Top-3: score=0.614648 doc_id=buyer-refund-timeline chunk=buyer-refund-timeline#7 | ### Đơn hàng thanh toán bằng SPayLater kết hợp với phương thức khác - Số tiền đã thanh toán bằng SPayLater: hoàn về Số dư khả dụng SPayLater trong 24 giờ hoặc Hóa đơn SPayLater trong 3–5 ngày làm việc tiếp the…
+Evidence rank: not in top-3
+Retrieval points: 0/2
+
+Q2: Đối với sản phẩm thực phẩm tươi sống và đông lạnh, thời gian tối đa để người mua gửi yêu cầu Trả hàng/Hoàn tiền là bao lâu?
+Filter: null
+Gold: Trong vòng 24 giờ kể từ lúc đơn hàng được cập nhật trạng thái Giao hàng thành công, trừ lý do Chưa nhận được hàng.
+Expected evidence: buyer-return-eligibility — Mục 1.2
+  Top-1: score=0.794739 doc_id=return-refund-policy chunk=return-refund-policy#12 | ### 3.2. Người Mua có thể gửi yêu cầu trả hàng/hoàn tiền trong vòng 15 (mười lăm) ngày kể từ lúc đơn hàng được cập nhật giao hàng thành công. Riêng đối với các Sản Phẩm là thực phẩm tươi sống và đông lạnh, Ngư…
+  Top-2: score=0.740286 doc_id=buyer-return-eligibility chunk=buyer-return-eligibility#3 | ### 1.2. Thời gian tối đa để gửi yêu cầu trả hàng hoàn tiền cho Shopee Thời gian để Shopee tiếp nhận yêu cầu Trả hàng/Hoàn tiền từ bạn sẽ là: - **Thực phẩm tươi sống & đông lạnh** (trừ lý do Chưa nhận được hàn…
+  Top-3: score=0.718700 doc_id=seller-return-process chunk=seller-return-process#2 | ### 1. Thời hạn Người mua yêu cầu Trả hàng/Hoàn tiền Người mua có thể gửi yêu cầu Trả hàng/Hoàn tiền trong vòng **15 ngày kể từ khi đơn hàng được giao thành công**. Trong trường hợp Người mua đã xác nhận **“Đã…
+Evidence rank: 1
+Retrieval points: 2/2
+
+Q3: Người bán có thời hạn bao nhiêu ngày để gửi khiếu nại nếu không đồng ý với quyết định Hoàn tiền ngay của Shopee?
+Filter: {"audience": "seller"}
+Gold: Người bán phải gửi khiếu nại trong vòng 2 ngày kể từ khi Shopee gửi thông báo Hoàn tiền ngay cho Người mua mà không yêu cầu trả hàng. Shopee xem xét trong 3–5 ngày làm việc.
+Expected evidence: seller-refund-appeal — Bảng tổng quan thời hạn và Mục 1
+  Top-1: score=0.896788 doc_id=seller-refund-appeal chunk=seller-refund-appeal#5 | ### Thời hạn khiếu nại Người bán phải gửi khiếu nại trong vòng **2 ngày kể từ khi Shopee gửi thông báo Hoàn tiền ngay cho Người mua mà không yêu cầu trả hàng**. Nếu quá thời hạn này, Người bán có thể không còn…
+  Top-2: score=0.867595 doc_id=seller-return-process chunk=seller-return-process#18 | ### 4. Mốc thời gian Người bán có thể khiếu nại hàng hoàn Người bán có thể khiếu nại kể từ thời điểm xảy ra một trong hai mốc sau, tùy mốc nào đến trước: - Đơn được cập nhật là đã trả hàng thành công cho Người…
+  Top-3: score=0.829553 doc_id=seller-return-process chunk=seller-return-process#17 | ### 3. Trường hợp Người bán muốn nhận lại hàng hoàn trả Nếu Người bán không muốn hoàn tiền ngay và muốn nhận lại sản phẩm, Người bán có thể đồng ý với phương án Trả hàng và Hoàn tiền. Sau khi yêu cầu được chấp…
+Evidence rank: 1
+Retrieval points: 2/2
+
+  Filter A/B:
+  without_filter evidence_rank=1
+  with_filter evidence_rank=1
+
+Q4: Khi người bán khiếu nại quyết định hoàn tiền ngay không yêu cầu trả hàng của Shopee, loại bằng chứng nào là bắt buộc phải cung cấp?
+Filter: {"audience": "seller"}
+Gold: Người bán bắt buộc phải cung cấp bằng chứng đóng gói: video ghi lại toàn bộ quá trình đóng gói sản phẩm trước khi bàn giao cho Đơn vị vận chuyển. Không yêu cầu bằng chứng mở hàng hoàn.
+Expected evidence: seller-return-evidence — Mục B và C.1
+  Top-1: score=0.823247 doc_id=seller-refund-appeal chunk=seller-refund-appeal#7 | ## 2. Trường hợp Shopee quyết định Trả hàng và Hoàn tiền Sau khi Shopee cho phép Người mua trả lại hàng để được hoàn tiền, Người bán có quyền khiếu nại trong các trường hợp sau: - Người bán không nhận được hàn…
+  Top-2: score=0.812928 doc_id=seller-return-evidence chunk=seller-return-evidence#2 | ## B. Các loại bằng chứng khiếu nại Trả hàng/Hoàn tiền Tùy vào từng trường hợp khiếu nại, Người bán cần cung cấp cho Shopee các loại bằng chứng cụ thể như sau:
+  Top-3: score=0.767139 doc_id=seller-return-process chunk=seller-return-process#17 | ### 3. Trường hợp Người bán muốn nhận lại hàng hoàn trả Nếu Người bán không muốn hoàn tiền ngay và muốn nhận lại sản phẩm, Người bán có thể đồng ý với phương án Trả hàng và Hoàn tiền. Sau khi yêu cầu được chấp…
+Evidence rank: not in top-3
+Retrieval points: 0/2
+
+  Filter A/B:
+  without_filter evidence_rank=not in top-3
+  with_filter evidence_rank=not in top-3
+
+Q5: Trong các phương thức gửi hàng hoàn trả của Shopee, hình thức nào yêu cầu người mua phải thanh toán trước phí trả hàng?
+Filter: {"audience": "buyer"}
+Gold: Hình thức Tự sắp xếp. Người mua cần thanh toán trước phí trả hàng tại bưu cục, sau đó Shopee hỗ trợ hoàn lại phí theo chính sách.
+Expected evidence: buyer-return-shipping — Mục 1.1 và 2.2
+  Top-1: score=0.783714 doc_id=buyer-return-process chunk=buyer-return-process#0 | # Quy trình Shopee xử lý yêu cầu Trả hàng/Hoàn tiền
+  Top-2: score=0.768017 doc_id=buyer-return-shipping chunk=buyer-return-shipping#14 | ## 3. Điều kiện hỗ trợ phí trả hàng - Yêu cầu trả hàng được chấp nhận. - Thông tin trả hàng (đơn vị vận chuyển, mã vận đơn trả hàng) được điền đầy đủ và chính xác trên ứng dụng Shopee. - Mã vận đơn phải kiểm t…
+  Top-3: score=0.748277 doc_id=buyer-return-shipping chunk=buyer-return-shipping#12 | ### 2.2. Phí vận chuyển trả hàng - Nếu bạn trả hàng qua hình thức Đơn vị vận chuyển đến lấy hàng và Trả hàng tại bưu cục: bạn được miễn phí trả hàng. - Nếu bạn trả hàng qua hình thức Tự sắp xếp, bạn cần thanh …
+Evidence rank: 3
+Retrieval points: 1/2
+
+  Filter A/B:
+  without_filter evidence_rank=not in top-3
+  with_filter evidence_rank=3
+
+SIMILARITY PREDICTIONS
+Pair 1: prediction=cao nhất; cosine=0.738255
+Pair 2: prediction=cao; cosine=0.461986
+Pair 3: prediction=cao; cosine=0.795722
+Pair 4: prediction=trung bình/thấp; cosine=0.285926
+Pair 5: prediction=thấp nhất; cosine=0.023886
+
+SUMMARY
+evidence@3: 3/5
+retrieval_points: 5/10
+Scoring: answer-bearing chunk at rank 1 = 2; rank 2–3 = 1; absent = 0.
+This score measures retrieval only; final agent-answer grading remains a separate check.
