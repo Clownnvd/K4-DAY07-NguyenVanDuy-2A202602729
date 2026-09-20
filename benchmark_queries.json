@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "query": "Người mua thanh toán đơn hàng bằng Thẻ tín dụng/ghi nợ thì nhận được tiền hoàn trong bao lâu?",
+    "gold_answer": "Thời gian nhận được tiền hoàn là từ 7–14 ngày làm việc, tùy theo từng ngân hàng, sau khi Shopee chấp nhận hoàn tiền; tiền sẽ hoàn về đúng tài khoản thẻ tín dụng/ghi nợ đã dùng khi thanh toán.",
+    "evidence_doc_id": "buyer-refund-timeline",
+    "evidence_section": "Bảng 1 và Lưu ý chung",
+    "metadata_filter": null
+  },
+  {
+    "id": 2,
+    "query": "Đối với sản phẩm thực phẩm tươi sống và đông lạnh, thời gian tối đa để người mua gửi yêu cầu Trả hàng/Hoàn tiền là bao lâu?",
+    "gold_answer": "Trong vòng 24 giờ kể từ lúc đơn hàng được cập nhật trạng thái Giao hàng thành công, trừ lý do Chưa nhận được hàng.",
+    "evidence_doc_id": "buyer-return-eligibility",
+    "evidence_section": "Mục 1.2",
+    "metadata_filter": null
+  },
+  {
+    "id": 3,
+    "query": "Người bán có thời hạn bao nhiêu ngày để gửi khiếu nại nếu không đồng ý với quyết định Hoàn tiền ngay của Shopee?",
+    "gold_answer": "Người bán phải gửi khiếu nại trong vòng 2 ngày kể từ khi Shopee gửi thông báo Hoàn tiền ngay cho Người mua mà không yêu cầu trả hàng. Shopee xem xét trong 3–5 ngày làm việc.",
+    "evidence_doc_id": "seller-refund-appeal",
+    "evidence_section": "Bảng tổng quan thời hạn và Mục 1",
+    "metadata_filter": {"audience": "seller"}
+  },
+  {
+    "id": 4,
+    "query": "Khi người bán khiếu nại quyết định hoàn tiền ngay không yêu cầu trả hàng của Shopee, loại bằng chứng nào là bắt buộc phải cung cấp?",
+    "gold_answer": "Người bán bắt buộc phải cung cấp bằng chứng đóng gói: video ghi lại toàn bộ quá trình đóng gói sản phẩm trước khi bàn giao cho Đơn vị vận chuyển. Không yêu cầu bằng chứng mở hàng hoàn.",
+    "evidence_doc_id": "seller-return-evidence",
+    "evidence_section": "Mục B và C.1",
+    "metadata_filter": {"audience": "seller"}
+  },
+  {
+    "id": 5,
+    "query": "Trong các phương thức gửi hàng hoàn trả của Shopee, hình thức nào yêu cầu người mua phải thanh toán trước phí trả hàng?",
+    "gold_answer": "Hình thức Tự sắp xếp. Người mua cần thanh toán trước phí trả hàng tại bưu cục, sau đó Shopee hỗ trợ hoàn lại phí theo chính sách.",
+    "evidence_doc_id": "buyer-return-shipping",
+    "evidence_section": "Mục 1.1 và 2.2",
+    "metadata_filter": {"audience": "buyer"}
+  }
+]

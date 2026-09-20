@@ -84,17 +84,19 @@ Cả bốn thành viên dùng chung corpus 8 tài liệu, 5 benchmark query và 
 
 **Kết luận CP4:** quan sát baseline cho thấy Recursive giữ cấu trúc tốt nhất. Chưa kết luận chiến lược thắng chung cuộc cho đến khi bốn người chạy cùng 5 query ở CP5.
 
-## 3. Câu hỏi đánh giá và chất lượng truy xuất — chờ CP5
+## 3. Câu hỏi đánh giá và chất lượng truy xuất — đã chốt query, chờ chạy CP5
 
-Nguyễn Thanh Bình chủ trì chốt đúng 5 query và gold answer trích từ corpus. Ít nhất một câu phải so sánh có/không có `metadata_filter={"audience": "buyer"}` hoặc `seller`.
+Lục Tiến Đạt đề xuất 5 query và gold answer; nhóm đã đối chiếu cả năm với corpus. Câu 3–4 bắt buộc lọc `audience=seller`, câu 5 bắt buộc lọc `audience=buyer`.
 
-| # | Query | Gold answer | Chunk chứa bằng chứng |
-|---:|---|---|---|
-| 1 | Chờ CP5 | Chờ CP5 | Chờ CP5 |
-| 2 | Chờ CP5 | Chờ CP5 | Chờ CP5 |
-| 3 | Chờ CP5 | Chờ CP5 | Chờ CP5 |
-| 4 | Chờ CP5 | Chờ CP5 | Chờ CP5 |
-| 5 | Chờ CP5 | Chờ CP5 | Chờ CP5 |
+| # | Query | Gold answer | Tài liệu/chunk chứa bằng chứng | Filter |
+|---:|---|---|---|---|
+| 1 | Người mua thanh toán đơn hàng bằng Thẻ tín dụng/ghi nợ thì nhận được tiền hoàn trong bao lâu? | 7–14 ngày làm việc tùy ngân hàng, tính sau khi Shopee chấp nhận hoàn tiền; tiền hoàn về đúng thẻ đã dùng. | `buyer-refund-timeline.md`, bảng thời gian và Lưu ý chung | Không |
+| 2 | Đối với sản phẩm thực phẩm tươi sống và đông lạnh, thời gian tối đa để người mua gửi yêu cầu Trả hàng/Hoàn tiền là bao lâu? | Trong vòng 24 giờ kể từ khi đơn hàng được cập nhật “Giao hàng thành công”, trừ lý do Chưa nhận được hàng. | `buyer-return-eligibility.md`, mục 1.2 | Không |
+| 3 | Người bán có thời hạn bao nhiêu ngày để gửi khiếu nại nếu không đồng ý với quyết định Hoàn tiền ngay của Shopee? | Trong vòng 2 ngày kể từ khi Shopee thông báo Hoàn tiền ngay cho Người mua mà không yêu cầu trả hàng; Shopee xem xét trong 3–5 ngày làm việc. | `seller-refund-appeal.md`, bảng tổng quan và mục 1 | `{"audience":"seller"}` |
+| 4 | Khi người bán khiếu nại quyết định hoàn tiền ngay không yêu cầu trả hàng của Shopee, loại bằng chứng nào là bắt buộc phải cung cấp? | Bằng chứng đóng gói: video ghi lại toàn bộ quá trình đóng gói sản phẩm trước khi bàn giao cho đơn vị vận chuyển. Không bắt buộc bằng chứng mở hàng hoàn. | `seller-return-evidence.md`, mục B và C.1 | `{"audience":"seller"}` |
+| 5 | Trong các phương thức gửi hàng hoàn trả của Shopee, hình thức nào yêu cầu người mua phải thanh toán trước phí trả hàng? | “Tự sắp xếp”: người mua trả trước phí gửi tại bưu cục; Shopee hỗ trợ hoàn lại theo chính sách. | `buyer-return-shipping.md`, mục 1.1 và 2.2 | `{"audience":"buyer"}` |
+
+Kết quả top-3, điểm 0/1/2 và so sánh có/không filter sẽ được bổ sung sau khi chạy cùng embedding backend ở CP5.
 
 ## 4. Demo và bài học nhóm — chờ CP6
 

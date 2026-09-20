@@ -114,17 +114,17 @@ Các dự đoán được ghi trước khi chạy embedding thật. Điểm th�
 | 4 | Phí gửi hàng hoàn trả do ai chịu? | Người bán cần nộp bằng chứng hình ảnh nào? | Trung bình/thấp | Chờ CP5 |
 | 5 | Chính sách hoàn tiền Shopee | Cách tạo môi trường ảo Python | Thấp nhất | Chờ CP5 |
 
-## 5. Kết quả truy xuất cá nhân — chờ CP5
+## 5. Kết quả truy xuất cá nhân — đã chốt query, chờ chạy CP5
 
-Tôi sẽ chạy đúng 5 query chung trên `MarkdownHeadingChunker(chunk_size=650)`, cùng embedding backend, `top_k=3` và filter như ba thành viên còn lại.
+Tôi chạy 5 query chung do Lục Tiến Đạt đề xuất trên `MarkdownHeadingChunker(chunk_size=650)`, cùng embedding backend và `top_k=3` với ba thành viên còn lại.
 
-| # | Query | Top-1 | Score | Relevant | Agent answer |
-|---:|---|---|---:|---|---|
-| 1 | Chờ bộ query chung | Chờ CP5 | — | — | — |
-| 2 | Chờ bộ query chung | Chờ CP5 | — | — | — |
-| 3 | Chờ bộ query chung | Chờ CP5 | — | — | — |
-| 4 | Chờ bộ query chung | Chờ CP5 | — | — | — |
-| 5 | Chờ bộ query chung | Chờ CP5 | — | — | — |
+| # | Query | Filter | Top-1 | Score | Relevant | Agent answer |
+|---:|---|---|---|---:|---|---|
+| 1 | Thẻ tín dụng/ghi nợ nhận tiền hoàn trong bao lâu? | Không | Chờ chạy | — | — | — |
+| 2 | Thực phẩm tươi sống/đông lạnh được gửi yêu cầu trả hàng tối đa bao lâu? | Không | Chờ chạy | — | — | — |
+| 3 | Người bán có bao nhiêu ngày để khiếu nại quyết định Hoàn tiền ngay? | `audience=seller` | Chờ chạy | — | — | — |
+| 4 | Khiếu nại Hoàn tiền ngay cần bắt buộc loại bằng chứng nào? | `audience=seller` | Chờ chạy | — | — | — |
+| 5 | Hình thức hoàn trả nào yêu cầu người mua trả trước phí? | `audience=buyer` | Chờ chạy | — | — | — |
 
 ## Tự đánh giá hiện tại
 
