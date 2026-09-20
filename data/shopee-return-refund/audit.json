@@ -1,0 +1,112 @@
+{
+  "audited_at": "2026-09-20",
+  "documents": 8,
+  "sources_rows": 8,
+  "audiences": {
+    "buyer": 4,
+    "both": 1,
+    "seller": 3
+  },
+  "urls_ok": 8,
+  "issues": [],
+  "records": [
+    {
+      "file": "buyer-refund-timeline.md",
+      "doc_id": "buyer-refund-timeline",
+      "audience": "buyer",
+      "chars": 4141,
+      "sha256": "bab1e5f1378b06ca9950e0091a73987c655e854927adeb074589b99b503b6013"
+    },
+    {
+      "file": "buyer-return-eligibility.md",
+      "doc_id": "buyer-return-eligibility",
+      "audience": "buyer",
+      "chars": 6668,
+      "sha256": "461f1332fc87e1f3f5623ce9f17bfaf64d7fcc3acc035acb26b078e99c007634"
+    },
+    {
+      "file": "buyer-return-process.md",
+      "doc_id": "buyer-return-process",
+      "audience": "buyer",
+      "chars": 9038,
+      "sha256": "0da85181de8ba610ce43ce3a84d1b087c80f1906681b6c2887a77b1e8a1165fe"
+    },
+    {
+      "file": "buyer-return-shipping.md",
+      "doc_id": "buyer-return-shipping",
+      "audience": "buyer",
+      "chars": 5947,
+      "sha256": "7f9dc801c6571bd96f3e45f486c15d57c21124de8ea073107cf548bf7ea9d53f"
+    },
+    {
+      "file": "return-refund-policy.md",
+      "doc_id": "return-refund-policy",
+      "audience": "both",
+      "chars": 19295,
+      "sha256": "cf0121f1e0b0edc4d2c072408ea37bd2042a218eb9f6815542f4ef55bfeccdf2"
+    },
+    {
+      "file": "seller-refund-appeal.md",
+      "doc_id": "seller-refund-appeal",
+      "audience": "seller",
+      "chars": 4927,
+      "sha256": "4c31616cd3ee213d7f8cb7e230aa71e09e471fec74a7fc9d2fcd60eeae2412fd"
+    },
+    {
+      "file": "seller-return-evidence.md",
+      "doc_id": "seller-return-evidence",
+      "audience": "seller",
+      "chars": 8492,
+      "sha256": "45d6000e87a5718c46b497807a82cbedd6158cf33d4bc081b9731006ef66c1b2"
+    },
+    {
+      "file": "seller-return-process.md",
+      "doc_id": "seller-return-process",
+      "audience": "seller",
+      "chars": 7749,
+      "sha256": "73b418453ea545c0332e6ccb5eba17295f0447a9893e2e0fa049cd7a42e3a0a2"
+    }
+  ],
+  "url_status": [
+    {
+      "doc_id": "buyer-refund-timeline",
+      "status": 200,
+      "url": "https://help.shopee.vn/portal/4/article/189473-[Tr%E1%BA%A3-h%C3%A0ng/-Ho%C3%A0n-ti%E1%BB%81n]-Th%E1%BB%9Di-gian-nh%E1%BA%ADn-ti%E1%BB%81n-ho%C3%A0n-v%C3%A0-c%C3%A1ch-ki%E1%BB%83m-tra-ti%E1%BB%81n-ho%C3%A0n"
+    },
+    {
+      "doc_id": "buyer-return-eligibility",
+      "status": 200,
+      "url": "https://help.shopee.vn/portal/4/article/188931-[Tr%E1%BA%A3-h%C3%A0ng/Ho%C3%A0n-ti%E1%BB%81n]-Nh%E1%BB%AFng-quy-%C4%91%E1%BB%8Bnh-chung-v%E1%BB%81-Tr%E1%BA%A3-h%C3%A0ng/Ho%C3%A0n-ti%E1%BB%81n-c%E1%BB%A7a-Shopee"
+    },
+    {
+      "doc_id": "buyer-return-process",
+      "status": 200,
+      "url": "https://help.shopee.vn/portal/4/article/190242-[Tr%E1%BA%A3-h%C3%A0ng/-Ho%C3%A0n-ti%E1%BB%81n]-Quy-tr%C3%ACnh-Shopee-x%E1%BB%AD-l%C3%BD-y%C3%AAu-c%E1%BA%A7u-Tr%E1%BA%A3-h%C3%A0ng/-Ho%C3%A0n-ti%E1%BB%81n"
+    },
+    {
+      "doc_id": "buyer-return-shipping",
+      "status": 200,
+      "url": "https://help.shopee.vn/portal/4/article/189477-[Tr%E1%BA%A3-h%C3%A0ng/-Ho%C3%A0n-ti%E1%BB%81n]-C%C3%A1c-ph%C6%B0%C6%A1ng-th%E1%BB%A9c-g%E1%BB%ADi-h%C3%A0ng-ho%C3%A0n-tr%E1%BA%A3-v%C3%A0-ph%C3%AD-ho%C3%A0n-tr%E1%BA%A3"
+    },
+    {
+      "doc_id": "return-refund-policy",
+      "status": 200,
+      "url": "https://help.shopee.vn/portal/4/article/77251-CH%C3%8DNH-S%C3%81CH-TR%E1%BA%A2-H%C3%80NG-V%C3%80-HO%C3%80N-TI%E1%BB%80N"
+    },
+    {
+      "doc_id": "seller-refund-appeal",
+      "status": 200,
+      "url": "https://banhang.shopee.vn/edu/article/3647"
+    },
+    {
+      "doc_id": "seller-return-evidence",
+      "status": 200,
+      "url": "https://banhang.shopee.vn/edu/article/25057"
+    },
+    {
+      "doc_id": "seller-return-process",
+      "status": 200,
+      "url": "https://banhang.shopee.vn/edu/article/563"
+    }
+  ]
+}
