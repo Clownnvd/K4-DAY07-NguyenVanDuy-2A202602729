@@ -100,7 +100,7 @@ So sánh các chiến lược phân đoạn trên tài liệu chính sách cốt
 **Chiến lược nào tốt nhất cho chủ đề này? Tại sao?**
 
 > **`RecursiveChunker` (chunk_size=500)** là chiến lược tối ưu nhất cho văn bản chính sách thương mại điện tử (đạt **10/10** điểm truy xuất). Vì các bài viết quy định Shopee có cấu trúc tiêu đề (`#`, `##`) và danh sách gạch đầu dòng phân tầng rõ ràng; `RecursiveChunker` ưu tiên ngắt theo đoạn lớn (`\n\n`, `\n`) trước khi chia nhỏ, giúp bảo toàn trọn vẹn tiêu đề điều khoản gắn liền với nội dung quy định chi tiết bên dưới.
-> 
+>
 > Xếp ngay sau là **`MarkdownHeadingChunker` (9/10)** của bạn Duy: chiến lược này rất tốt trong việc bám theo tiêu đề Markdown, nhưng việc lặp lại heading có thể gây nhiễu nếu đoạn văn quá ngắn hoặc đứng độc lập. Trong khi đó, **`SentenceChunker` (8/10)** làm đứt gãy liên kết giữa tiêu đề mục cha với các điều khoản con, và **`FixedSizeChunker` (7/10)** cho hiệu quả thấp nhất do thường xuyên cắt đứt ngang xương các câu văn và thuật ngữ tại ranh giới 500 ký tự.
 
 ---
