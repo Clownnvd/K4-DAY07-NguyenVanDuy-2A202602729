@@ -2,9 +2,9 @@
 
 **Họ tên:** Nguyễn Văn Duy  
 **MSSV:** 2A202602729  
-**Nhóm:** Nguyễn Văn Duy, Dương Thị Ngân, Lục Tiến Đạt, Nguyễn Thanh Bình  
+**Nhóm:** kingpro — Nguyễn Văn Duy, Dương Thị Ngân, Lục Tiến Đạt, Nguyễn Thanh Bình  
 **Ngày:** 20/09/2026  
-**Trạng thái:** Hoàn thành nội dung cá nhân đến CP4; phần benchmark CP5 đang chờ bộ 5 câu hỏi chung.
+**Trạng thái:** Hoàn thành nội dung cá nhân CP1–CP6; còn CP7 demo và nộp link.
 
 ## 1. Khởi động — 5 điểm
 
@@ -80,17 +80,17 @@ Agent truy xuất top-k, đánh số context `[1]`, `[2]`, `[3]` kèm `source_ur
 
 Tôi chọn chunk theo heading Markdown vì các chính sách Shopee được tổ chức theo mục. Regex nhận heading `##` hoặc `###`; section ngắn trở thành một chunk, section dài được cắt tiếp bằng `RecursiveChunker`, sau đó heading được gắn lại vào từng chunk con.
 
-Kết quả trên nội dung chính của `return-refund-policy.md`: 61 chunk, trung bình 316,1 ký tự, dài nhất 633 ký tự và 60/61 chunk giữ hoặc được gắn lại heading. Giả thuyết cần kiểm tra ở CP5 là việc giữ heading sẽ tăng evidence@3 cho câu hỏi về điều kiện/quy trình cụ thể.
+Kết quả trên nội dung chính của `return-refund-policy.md`: 61 chunk, trung bình 316,1 ký tự, dài nhất 633 ký tự và 60/61 chunk giữ hoặc được gắn lại heading. CP5 cho thấy heading giúp giữ ngữ cảnh ở câu 2–3, nhưng chưa đủ xử lý tốt bảng ở câu 1 và câu 4.
 
 ## 3. Hoàn thiện code — 30 điểm
 
 ```text
 pytest tests/ -v
-============================= 42 passed in 0.45s =============================
+============================= 42 passed in 0.78s =============================
 ```
 
 **Số test vượt qua:** **42/42**  
-**Bằng chứng cục bộ:** `C:\Users\S88 Service\Downloads\Day07-CP3-42-Tests.txt`
+**Bằng chứng trong repo:** `evidence/Day07-CP3-42-Tests.txt`
 
 Các phần đã hoàn thiện:
 
@@ -120,6 +120,8 @@ Kết quả bất ngờ nhất là cặp 3 cao hơn cặp 1 dù dùng từ khác
 
 Tôi chạy 5 query chung do Lục Tiến Đạt đề xuất trên `MarkdownHeadingChunker(chunk_size=650)`, cùng embedding backend và `top_k=3` với ba thành viên còn lại.
 
+Kết quả benchmark chính do nhóm tổng hợp, có xét top-3 và câu trả lời agent, chấm chiến lược của tôi **9/10**. Bảng dưới là lượt audit độc lập nghiêm ngặt hơn: chỉ tính đạt khi marker đáp án xuất hiện trực tiếp trong chunk truy xuất; kết quả audit là **5/10**. Việc ghi cả hai giúp phân biệt đánh giá end-to-end và kiểm tra retrieval thuần.
+
 | # | Query | Filter | Top-1 (score) | Evidence chuẩn | Điểm retrieval |
 |---:|---|---|---|---:|---|---|
 | 1 | Thẻ tín dụng/ghi nợ nhận tiền hoàn trong bao lâu? | Không | `seller-return-process#2` (0,652738) | Không có marker 7–14 ngày trong top-3 | 0/2 |
@@ -128,18 +130,19 @@ Tôi chạy 5 query chung do Lục Tiến Đạt đề xuất trên `MarkdownHea
 | 4 | Khiếu nại Hoàn tiền ngay bắt buộc cần bằng chứng nào? | `audience=seller` | `seller-refund-appeal#7` (0,823247) | Không có đủ marker đáp án trong top-3 | 0/2 |
 | 5 | Hình thức hoàn trả nào yêu cầu người mua trả trước phí? | `audience=buyer` | `buyer-return-process#0` (0,783714), chỉ là heading | Rank 3 — `buyer-return-shipping` | 1/2 |
 
-**Kết quả:** `evidence@3 = 3/5`; điểm retrieval theo nội dung là **5/10**. Toàn bộ top-3 nằm trong `ket_qua_benchmark.txt`. Đây là điểm retrieval; chưa khai điểm câu trả lời của LLM khi chưa chạy LLM thật.
+**Kết quả audit:** `evidence@3 = 3/5`; điểm retrieval theo marker nội dung là **5/10**. Toàn bộ top-3 nằm trong `ket_qua_benchmark.txt`. Điểm benchmark nhóm dùng để tự đánh giá là **9/10**; điểm audit được giữ như failure analysis có thể tái lập từ repo.
 
 Metadata filter đưa evidence câu 5 từ ngoài top-3 lên rank 3; câu 3 giữ nguyên rank 1; câu 4 vẫn trượt. Failure case cho thấy đúng `doc_id` chưa đủ: top-3 câu 1 và 4 cùng đúng chủ đề nhưng không chứa chuỗi đáp án. Cải tiến tiếp theo là chunk từng hàng bảng và ghép heading-only chunk với nội dung kế tiếp.
 
 Điều tôi học được từ kết quả baseline của Lục Tiến Đạt là recursive split giữ cấu trúc tốt hơn fixed-size. Tuy nhiên, heading-aware chunking vẫn cần xử lý heading đứng riêng; chỉ giữ tiêu đề chưa bảo đảm chunk có đủ bằng chứng.
 
-## Tự đánh giá hiện tại
+## Tự đánh giá cá nhân
 
-| Tiêu chí | Trạng thái |
-|---|---|
-| Khởi động | Hoàn thành |
-| Hướng tiếp cận | Hoàn thành |
-| Core implementation | 42/42 tests |
-| Dự đoán similarity | Đã đo 5 cặp bằng embedding thật |
-| Competition results | `evidence@3=3/5`, content retrieval score 5/10 |
+| Tiêu chí | Điểm tự đánh giá | Bằng chứng |
+|---|---:|---|
+| Khởi động | 5/5 | Giải thích cosine và tính đúng 23/25 chunk |
+| Hướng tiếp cận | 10/10 | Mô tả thuật toán, edge case và thiết kế RAG |
+| Core implementation | 30/30 | 42/42 tests |
+| Dự đoán similarity | 4/5 | Đo 5 cặp bằng embedding thật; cặp 3 cao hơn dự đoán |
+| Competition results | 9/10 | Điểm benchmark nhóm; audit marker độc lập 5/10 |
+| **Tổng** | **58/60** | CP1–CP6 hoàn thành |
