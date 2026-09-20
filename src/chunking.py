@@ -123,6 +123,50 @@ class RecursiveChunker:
         return chunks
 
 
+class MarkdownHeadingChunker:
+    """Split Markdown policies by semantic heading/section boundaries.
+
+    Sections longer than ``chunk_size`` fall back to ``RecursiveChunker``.
+    The original heading is repeated on every child chunk so a retrieved
+    fragment still carries the policy section that gives it meaning.
+    """
+
+    HEADING_PATTERN = re.compile(r"(?m)^(#{2,3}\s+.+)$")
+
+    def __init__(self, chunk_size: int = 650) -> None:
+        self.chunk_size = max(80, chunk_size)
+
+    def chunk(self, text: str) -> list[str]:
+        if not text or not text.strip():
+            return []
+
+        matches = list(self.HEADING_PATTERN.finditer(text))
+        if not matches:
+            return RecursiveChunker(chunk_size=self.chunk_size).chunk(text)
+
+        chunks: list[str] = []
+        preamble = text[: matches[0].start()].strip()
+        if preamble:
+            chunks.extend(
+                RecursiveChunker(chunk_size=self.chunk_size).chunk(preamble)
+            )
+
+        for index, match in enumerate(matches):
+            end = matches[index + 1].start() if index + 1 < len(matches) else len(text)
+            section = text[match.start() : end].strip()
+            heading = match.group(1).strip()
+            if len(section) <= self.chunk_size:
+                chunks.append(section)
+                continue
+
+            body = section[len(match.group(1)) :].strip()
+            body_size = max(40, self.chunk_size - len(heading) - 1)
+            for piece in RecursiveChunker(chunk_size=body_size).chunk(body):
+                chunks.append(f"{heading}\n{piece}".strip())
+
+        return [chunk for chunk in chunks if chunk.strip()]
+
+
 def _dot(a: list[float], b: list[float]) -> float:
     return sum(x * y for x, y in zip(a, b))
 
